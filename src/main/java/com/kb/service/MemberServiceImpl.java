@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kb.domain.BoardVO;
-import com.kb.domain.BoardCriteria;
-import com.kb.mapper.BoardMapper;
+import com.kb.domain.MemberVO;
+import com.kb.domain.MemberCriteria;
+import com.kb.mapper.MemberMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -16,52 +16,52 @@ import lombok.extern.log4j.Log4j;
 @Service
 @Log4j
 @AllArgsConstructor
-public class BoardServiceImpl implements BoardService {
+public class MemberServiceImpl implements MemberService {
 	
 	
 	@Setter(onMethod_ = @Autowired)
-	private BoardMapper mapper;
+	private MemberMapper mapper;
 	
 
 	@Override
-	public void register(BoardVO board) {
+	public void register(MemberVO member) {
 		log.info("register");
-		mapper.insert(board);
+		mapper.insert(member);
 	}
 
 	@Override
-	public BoardVO get(int bno) {
-		return mapper.read(bno);
+	public MemberVO get(int num) {
+		return mapper.read(num);
 	}
 
 	@Override
-	public boolean modify(BoardVO board) {
+	public boolean modify(MemberVO member) {
 		// TODO Auto-generated method stub
-		return mapper.update(board) == 1;
+		return mapper.update(member) == 1;
 	}
 
 	@Override
-	public boolean remove(int bno) {
+	public boolean remove(int num) {
 		// TODO Auto-generated method stub
-		return mapper.delete(bno) == 1;
+		return mapper.delete(num) == 1;
 	}
 
 	@Override
-	public List<BoardVO> getList() {
+	public List<MemberVO> getList() {
 		log.info("getList...................");
 		
 		return mapper.getList();
 	}
 
 	@Override
-	public List<BoardVO> getListWithPaging(BoardCriteria cri) {
+	public List<MemberVO> getListWithPaging(MemberCriteria cri) {
 		log.info("getList...................");
 		
 		return mapper.getListWithPaging(cri);
 	}
 
 	@Override
-	public int getListWithCnt(BoardCriteria cri) {
+	public int getListWithCnt(MemberCriteria cri) {
 		log.info("getListWithCnt...................");
 		
 		return mapper.getListWithCnt(cri);

@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class PageDTO {
+public class BoardPageDTO {
 
 	private int startPage;	//시작페이지
 	private int endPage;	//끝 페이지
@@ -13,16 +13,16 @@ public class PageDTO {
 	private boolean prev, next;	//이전 다음
 	
 	private int total;	//전체 레코드 수
-	private Criteria cri;	//현재 페이지, 한 페이지 당 보여줄 갯수
+	private BoardCriteria cri;	//현재 페이지, 한 페이지 당 보여줄 갯수
+	private final int PAGE_NUM = 5;
 	
-	
-	public PageDTO(int total, Criteria cri) {
+	public BoardPageDTO(int total, BoardCriteria cri) {
 		this.total = total;
 		this.cri = cri;
 		
-		this.endPage = (int)(Math.ceil(cri.getPageNum()/5.0))*5;
+		this.endPage = (int)(Math.ceil(cri.getPageNum()/(PAGE_NUM*1.0)))*PAGE_NUM;
 		
-		this.startPage = this.endPage - 4;
+		this.startPage = this.endPage - (PAGE_NUM-1);
 		
 		int realEnd = (int)(Math.ceil((total * 1.0) / cri.getAmount()));
 		

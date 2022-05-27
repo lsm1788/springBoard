@@ -3,13 +3,13 @@ package com.kb.mapper;
 import java.util.List;
 
 import com.kb.domain.BoardVO;
-import com.kb.domain.Criteria;
+import com.kb.domain.BoardCriteria;
 
 public interface BoardMapper {
 	
 	public List<BoardVO> getList();
 	
-	public List<BoardVO> getListWithPaging(Criteria cri);
+	public List<BoardVO> getListWithPaging(BoardCriteria cri);
 	
 	public void insert(BoardVO board);
 	
@@ -19,6 +19,6 @@ public interface BoardMapper {
 	
 	public int delete(int bno);
 
-	public int getListWithCnt();
+	public int getListWithCnt(BoardCriteria cri);
 
 }

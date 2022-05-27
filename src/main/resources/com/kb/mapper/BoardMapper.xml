@@ -11,6 +11,17 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="getListWithPaging" resultType="com.kb.domain.BoardVO">
 		<![CDATA[
 		SELECT * FROM tbl_board 
+		WHERE 1=1 
+		]]>
+		<choose>
+			<when test="type == 'title'">
+			AND title LIKE concat('%',#{keyword},'%')
+			</when>
+			<when test="type == 'content'">
+			AND content LIKE concat('%',#{keyword},'%')
+			</when>
+		</choose>
+		<![CDATA[
 		ORDER BY bno DESC 
 		LIMIT #{amount} offset #{pageStart}
 		]]>
@@ -18,6 +29,15 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 	<select id="getListWithCnt" resultType="int">
 		SELECT count(*) FROM tbl_board
+		WHERE 1=1 
+		<choose>
+			<when test="type == 'title'">
+			AND title LIKE concat('%',#{keyword},'%')
+			</when>
+			<when test="type == 'content'">
+			AND content LIKE concat('%',#{keyword},'%')
+			</when>
+		</choose>
 	</select>
 	
 	<insert id="insert">

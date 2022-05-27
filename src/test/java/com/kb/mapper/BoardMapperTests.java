@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kb.domain.BoardVO;
-import com.kb.domain.Criteria;
+import com.kb.domain.BoardCriteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class BoardMapperTests {
-	
+
 	@Setter(onMethod_ = @Autowired)
 	BoardMapper mapper;
 	
@@ -28,9 +28,11 @@ public class BoardMapperTests {
 	
 	@Test
 	public void getListWithPaging() {
-		Criteria cri = new Criteria();
+		BoardCriteria cri = new BoardCriteria();
 		cri.setPageNum(1);
 		cri.setAmount(20);
+		cri.setType("content");
+		cri.setKeyword("테스트");
 		List<BoardVO> list = mapper.getListWithPaging(cri);
 		list.forEach(board -> log.info(board));
 	}
@@ -44,18 +46,28 @@ public class BoardMapperTests {
 	}
 	
 	public void read() {
-		log.info(mapper.read(131056));
+		log.info(mapper.read(458731));
 	}
+	
+	
 	public void update() {
 		BoardVO board = new BoardVO();
-		board.setBno(131056);
+		board.setBno(458731);
 		board.setTitle("수정 작성한 글");
 		board.setContent("수정 작성한 내용");
 		board.setWriter("newbie");
 		mapper.update(board);
 	}
-	@Test
+	
+	
 	public void delete() {
-		mapper.delete(131056);
+		mapper.delete(458731);
 	}
 }
+
+
+
+
+
+
+

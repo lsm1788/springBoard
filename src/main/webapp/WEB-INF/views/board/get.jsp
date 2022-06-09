@@ -20,13 +20,19 @@
 					</p>
 
 					<div class="panel-body">
-						<form id="frm" method="post" action="">
+						<form id="frm" method="post" action="" enctype="multipart/form-data">
 						<input type="hidden" name="bno" id="bno" value="${board.bno}">
+						<input type="hidden" name="realFileName" value="${board.realFileName}">
+						<input type="hidden" name="realSaveFileName" value="${board.realSaveFileName}">
 							<div class="form-group">
 								<label>제목</label><input type="text" name="title" id="title" class="form-control" value="${board.title}" required="required">
 							</div>
 							<div class="form-group">
 								<label>내용</label><textarea name="content" id="content" class="form-control" style="resize:none;" required="required">${board.content}</textarea>
+								<img src="display?fileName=sm_${board.realSaveFileName}" alt="첨부이미지">
+							</div>
+							<div class="form-group">
+								<label>첨부파일</label><input type="file" name="upfile" id="upfile" multiple="multiple" class="form-control" value="">
 							</div>
 							<div class="form-group">
 								<label>작성자</label><input type="text" name="writer" id="writer" class="form-control" value="${board.writer}" required="required">
@@ -44,8 +50,8 @@
 $(document).ready(function(){
 	$("#btn_del").on("click",function(){
 		if(confirm("정말로 삭제하시겠습니까?")){
-//GET방식		location.href='remove?bno=${board.bno}';
-			//POST방식
+			//GET 방식: location.href='remove?bno=${board.bno}';
+			//POST 방식
 			$("#frm").attr("action","remove");
 			$("#frm").submit();
 		}

@@ -43,6 +43,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<insert id="insert">
 		INSERT INTO tbl_board (title, content, writer)
 		VALUES (#{title}, #{content}, #{writer})
+		
+		<selectKey keyProperty="bno" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 	
 	<select id="read" resultType="com.kb.domain.BoardVO">

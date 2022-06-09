@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kb.domain.BoardVO;
+import com.kb.domain.AttachFileDTO;
 import com.kb.domain.BoardCriteria;
 import com.kb.mapper.BoardMapper;
 
@@ -23,12 +24,14 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper mapper;
 	
 
+
 	@Override
 	public void register(BoardVO board) {
 		log.info("register");
-		mapper.insert(board);
+		int last_id = mapper.insert(board);
+		log.info("AI:"+last_id);
 	}
-
+	
 	@Override
 	public BoardVO get(int bno) {
 		return mapper.read(bno);

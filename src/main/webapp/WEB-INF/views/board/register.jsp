@@ -17,12 +17,15 @@
 						<!-- Add <code>.table-hover</code> to enable a hover state on table rows within a <code>&lt;tbody&gt;</code>. -->
 					</p>
 					<div class="panel-body">
-						<form method="post" action="">
+						<form method="post" action="" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>제목</label><input type="text" name="title" id="title" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
 								<label>내용</label><textarea style="resize: none;" name="content" id="content" class="form-control" required="required"></textarea>
+							</div>
+							<div class="form-group">
+								<label>첨부파일</label><input type="file" name="upfile" id="upfile" multiple="multiple" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
 								<label>작성자</label><input type="text" name="writer" id="writer" class="form-control" value="" required="required">

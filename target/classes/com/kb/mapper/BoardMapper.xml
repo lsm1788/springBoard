@@ -44,8 +44,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		INSERT INTO tbl_board (title, content, writer)
 		VALUES (#{title}, #{content}, #{writer})
 		
-		<selectKey keyProperty="bno" resultType="int">
-			SELECT LAST_INSERT_ID()
+		<selectKey keyColumn="id" keyProperty="bno"
+		order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID() AS id
 		</selectKey>
 	</insert>
 	

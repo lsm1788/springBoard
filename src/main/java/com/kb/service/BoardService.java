@@ -21,4 +21,6 @@ public interface BoardService {
 	public List<BoardVO> getListWithPaging(BoardCriteria cri);
 
 	public int getListWithCnt(BoardCriteria cri);
+
+	boolean remove(BoardVO board);
 }

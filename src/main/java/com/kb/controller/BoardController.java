@@ -3,8 +3,11 @@ package com.kb.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -79,12 +82,10 @@ public class BoardController {
 	public String register(MultipartFile[] upfile, BoardVO board) {
 		
 		String filePath = "d:/upload";
-			
+		
 		List<BoardAttachVO> list = new ArrayList<BoardAttachVO>();
-		
-		
-		for(MultipartFile multi : upfile) {
 			
+		for(MultipartFile multi : upfile) {
 			
 			BoardAttachVO attachVO = new BoardAttachVO();
 
@@ -96,7 +97,6 @@ public class BoardController {
 			UUID uuid = UUID.randomUUID();
 			
 			String realSaveFileName = uuid.toString()+"_"+fileName;
-			
 			
 			File saveFile = new File(filePath, realSaveFileName);
 			try {
@@ -121,6 +121,8 @@ public class BoardController {
 			}
 		}
 		
+		board.setAttachList(list);
+		
 		service.register(board);
 		
 		return "redirect:/board/list";
@@ -142,13 +144,17 @@ public class BoardController {
 	
 	@RequestMapping(value = "/get", method = RequestMethod.POST)
 	//public void get(int bno) {
-	public String get(MultipartFile[] upfile, BoardVO board) {
+	public String get(@RequestParam("oldfile") ArrayList<String> oldfiles, MultipartFile[] upfile, BoardVO board) {
 		
 		log.info("upfile여부"+upfile.length);
+		
+		List<BoardAttachVO> list = new ArrayList<BoardAttachVO>();
 		
 		String filePath = "d:/upload";
 		
 		for(MultipartFile multi : upfile) {
+			
+			BoardAttachVO attachVO = new BoardAttachVO();
 
 			String upfileTmp = multi.getOriginalFilename();
 			
@@ -158,8 +164,8 @@ public class BoardController {
 			UUID uuid = UUID.randomUUID();
 			
 			String realSaveFileName = uuid.toString()+"_"+fileName;
-			
-			
+
+
 			File saveFile = new File(filePath, realSaveFileName);
 			try {
 				multi.transferTo(saveFile);
@@ -172,19 +178,54 @@ public class BoardController {
 					thumbnail.close();
 				}
 				
+				attachVO.setUuid(uuid.toString());
+				attachVO.setUploadPath(filePath);
+				attachVO.setFileName(realSaveFileName);
+				
+				list.add(attachVO);
+				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		
+		board.setAttachList(list);
+		
 		boolean result = service.modify(board);
+		
+		//기존파일 삭제
+		Iterator<String> it = oldfiles.iterator();
+		while(it.hasNext()) {
+			String fileName = it.next();
+			deleteFile(fileName);
+		}
 		if(result) {
 			return "redirect:/board/list";
 		} else {
 			return "redirect:/board/get?bno="+board.getBno();
 		}
 
+	}
+
+	/**
+	 * 첨부파일 삭제
+	 */	
+	private void deleteFile(String fileName) {
+		try {
+			
+			File deleteFile 
+				= new File("d:/upload/"+URLDecoder.decode(fileName, "UTF-8"));
+			deleteFile.delete();
+			
+			File smDelFile 
+				= new File("d:/upload/sm_"+URLDecoder.decode(fileName, "UTF-8"));
+			smDelFile.delete();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value = "/remove", method = RequestMethod.GET)
@@ -197,10 +238,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
-	public String remove(BoardVO board) {
+	public String remove(@RequestParam("oldfile") ArrayList<String> oldfiles, BoardVO board) {
 		
-		service.remove(board.getBno());
+		service.remove(board);
 		
+		//기존파일 삭제
+		Iterator<String> it = oldfiles.iterator();
+		while(it.hasNext()) {
+			String fileName = it.next();
+			deleteFile(fileName);
+		}
+				
 		return "redirect:/board/list";
 	}
 	

@@ -1,13 +1,17 @@
 package com.kb.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kb.domain.BoardVO;
 import com.kb.domain.AttachFileDTO;
+import com.kb.domain.BoardAttachVO;
 import com.kb.domain.BoardCriteria;
+import com.kb.mapper.BoardAttachMapper;
 import com.kb.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -23,30 +27,56 @@ public class BoardServiceImpl implements BoardService {
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
 	
+	@Setter(onMethod_ = @Autowired)
+	private BoardAttachMapper attachMapper;
 
 
 	@Override
+	@Transactional
 	public void register(BoardVO board) {
 		log.info("register");
-		int last_id = mapper.insert(board);
-		log.info("AI:"+last_id);
+		mapper.insert(board);
+		
+		Iterator<BoardAttachVO> it = board.getAttachList().iterator();
+		while(it.hasNext()) {
+			BoardAttachVO attachVO = it.next();
+			attachVO.setBno(board.getBno());
+			attachMapper.insert(attachVO);
+		}
 	}
 	
 	@Override
 	public BoardVO get(int bno) {
-		return mapper.read(bno);
+		BoardVO vo = mapper.read(bno);
+		List<BoardAttachVO> attachList = attachMapper.read(bno);
+		vo.setAttachList(attachList);
+		return vo;
 	}
 
 	@Override
+	@Transactional
 	public boolean modify(BoardVO board) {
-		// TODO Auto-generated method stub
-		return mapper.update(board) == 1;
+			mapper.update(board);
+			attachMapper.delete(board);
+			Iterator<BoardAttachVO> it = board.getAttachList().iterator();
+			while(it.hasNext()) {
+				BoardAttachVO attachVO = it.next();
+				attachVO.setBno(board.getBno());
+				attachMapper.insert(attachVO);
+			}
+			return true;
 	}
-
+	
 	@Override
 	public boolean remove(int bno) {
-		// TODO Auto-generated method stub
 		return mapper.delete(bno) == 1;
+	}	
+	
+	@Override
+	@Transactional
+	public boolean remove(BoardVO board) {
+		attachMapper.delete(board);
+		return mapper.delete(board.getBno()) == 1;
 	}
 
 	@Override

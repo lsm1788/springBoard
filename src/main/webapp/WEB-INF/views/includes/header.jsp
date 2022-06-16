@@ -200,10 +200,21 @@
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
-                  <a class="text-color" href="logout.html">
+                  <a class="logout text-color" href="#">
                     <span class="m-r-xs"><i class="fa fa-power-off"></i></span>
-                    <span>Home</span>
+                    <span>Logout</span>
                   </a>
+                <form id="logout" action="/customLogout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				</form>
+				<script>
+				$(document).ready(function(){
+					$(".logout").on("click", function(){
+						$("#logout").submit();
+					});
+				});
+				 	
+				</script>
                 </li>
               </ul>
             </li>
@@ -232,13 +243,12 @@
         <li class="has-submenu">
           <a href="javascript:void(0)" class="submenu-toggle">
             <i class="menu-icon zmdi zmdi-layers zmdi-hc-lg"></i>
-            <span class="menu-text">Layouts</span>
-            <span class="label label-warning menu-label">2</span>
+            <span class="menu-text">스마트학습방</span>
             <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
           </a>
           <ul class="submenu">
-            <li><a href="../default/index.html"><span class="menu-text">Default</span></a></li>
-            <li><a href="../topbar/index.html"><span class="menu-text">Topbar</span></a></li>
+            <li><a href="/member/list"><span class="menu-text">회원관리</span></a></li>
+            <li><a href="/board/list"><span class="menu-text">갤러리</span></a></li>
           </ul>
         </li>
 

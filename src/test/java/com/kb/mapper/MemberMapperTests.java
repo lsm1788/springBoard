@@ -22,11 +22,15 @@ public class MemberMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	MemberMapper mapper;
 	
-	@Test
 	public void getListTest() {
 		log.info(mapper.getList());
 	}
-	
+
+	@Test
+	public void testRead() {
+		MemberVO vo = mapper.readLogin("admin9");
+		log.info(vo);
+	}
 	
 	public void getListWithPaging() {
 		MemberCriteria cri = new MemberCriteria();

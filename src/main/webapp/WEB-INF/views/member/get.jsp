@@ -22,6 +22,7 @@
 					<div class="panel-body">
 						<form id="frm" method="post" action="">
 						<input type="hidden" name="num" id="num" value="${member.num}">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<div class="form-group">
 								<label>회원명</label><input type="text" name="uname" id="uname" class="form-control" value="${member.uname}" required="required">
 							</div>
@@ -32,7 +33,7 @@
 								<label>학년/반</label><input type="text" name="gradeclass" id="gradeclass" class="form-control" value="${member.gradeclass}" required="required">
 							</div>
 							<div class="form-group">
-								<label>전화번호</label><input type="text" name="uid" id="uid" class="form-control" value="${member.uid}" required="required">
+								<label>아이디</label><input type="text" name="uid" id="uid" class="form-control" value="${member.uid}" required="required">
 							</div>
 							<div class="form-group">
 								<label>비밀번호</label><input type="text" name="upw" id="upw" class="form-control" value="" required="required">

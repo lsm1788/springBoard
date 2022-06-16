@@ -21,6 +21,8 @@
 
 					<div class="panel-body">
 						<form method="post" action="">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<input type="hidden" name="authority" value="ROLE_MEMBER"/>
 							<div class="form-group">
 								<label>회원명</label><input type="text" name="uname" id="uname" class="form-control" value="" required="required">
 							</div>
@@ -31,7 +33,7 @@
 								<label>학년/반</label><input type="text" name="gradeclass" id="gradeclass" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
-								<label>전화번호</label><input type="text" name="uid" id="uid" class="form-control" value="" required="required">
+								<label>아이디</label><input type="text" name="uid" id="uid" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
 								<label>비밀번호</label><input type="text" name="upw" id="upw" class="form-control" value="" required="required">
@@ -40,7 +42,7 @@
 								<label>노선</label><input type="text" name="route" id="route" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
-								<label>탑승장소</label><input type="text" name="boardingplace" id="writer" class="form-control" value="" required="required">
+								<label>탑승장소</label><input type="text" name="boardingplace" id="boardingplace" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-default">회원가입</button>

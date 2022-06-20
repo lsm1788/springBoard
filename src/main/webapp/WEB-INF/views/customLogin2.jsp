@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="/resources/assets/css/core.css">
 	<link rel="stylesheet" href="/resources/assets/css/misc-pages.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900,300">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body class="simple-page">
 	<div id="back-to-home">
@@ -33,17 +34,17 @@
 	<h4 class="form-title m-b-xl text-center">Login</h4>
 	<form method="post" action="/login">
 		<div class="form-group">
-			<input id="sign-in-email" type="text" name="username" class="form-control" placeholder="Username">
+			<input id="uid" type="text" name="username" class="form-control" placeholder="Username">
 		</div>
 
 		<div class="form-group">
-			<input id="sign-in-password" type="password" name="password" class="form-control" placeholder="Password">
+			<input id="upw" type="password" name="password" class="form-control" placeholder="Password">
 		</div>
 
 		<div class="form-group m-b-xl">
 			<div class="checkbox checkbox-primary">
-				<input type="checkbox" name="remember-me" id="keep_me_logged_in"/>
-				<label for="keep_me_logged_in">Keep me signed in</label>
+				<input type="checkbox" name="saveId" value="save"/>
+				<label for="saveId">save ID</label>
 			</div>
 		</div>
 		<input type="submit" class="btn btn-primary" value="SIGN IN">
@@ -63,5 +64,31 @@
 
 
 	</div><!-- .simple-page-wrap -->
+<script>
+	$(document).ready(function(){
+		
+		//document.cookie = "chkId="+encodeURIComponent("한글");
+		//alert(document.cookie);
+		console.log(document.cookie.split('=')[1]);
+		$('#uid').val(document.cookie.split('=')[1]);
+		
+		if(document.cookie.split('=')[1] != undefined && document.cookie.split('=')[1] != ""){
+			$('#saveId').prop("checked", true);
+		}
+		
+		$("input[type=checkbox]").on("click", function(){
+			if($("input[type=checkbox]").is(":checked")){
+				alert("공공장소에서는 사용하지 마세요.");
+				
+				let saveId = $("#uid").val();
+				let expires = new Date(Date.now()+((60*60*24)*1000));
+				
+				document.cookie = "chkId="+saveId+"; path=/; expires="+expires;
+			} else {
+				document.cookie = "chkId=; path=/; expires=-1";
+			}
+		});
+	});
+</script>		
 </body>
 </html>

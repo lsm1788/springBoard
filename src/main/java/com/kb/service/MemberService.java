@@ -24,5 +24,5 @@ public interface MemberService {
 
 	public List<AuthorVO> readAuthsByUid(String uid);
 
-	public void insertAuthByuid(AuthorVO vo);
+	public void insertAuthByUid(AuthorVO vo);
 }

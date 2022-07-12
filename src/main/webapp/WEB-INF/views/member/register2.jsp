@@ -8,34 +8,44 @@
 <jsp:include page="../includes/header.jsp"></jsp:include>
 
 			<div class="col-md-12">
-				<h4 class="m-b-lg">Board Register</h4>
+				<h4 class="m-b-lg">Member Register</h4>
 			</div><!-- END column -->
 
 
 			<div class="col-md-12">
 				<div class="widget p-lg">
-					<h4 class="m-b-lg">Board Register</h4>
+					<h4 class="m-b-lg">Member Register</h4>
 					<p class="m-b-lg docs">
 						<!-- Add <code>.table-hover</code> to enable a hover state on table rows within a <code>&lt;tbody&gt;</code>. -->
 					</p>
 
 					<div class="panel-body">
-						<form method="post" action="" enctype="multipart/form-data">
+						<form method="post" action="">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<input type="hidden" name="authority" value="ROLE_MEMBER"/>
 							<div class="form-group">
-								<label>제목</label><input type="text" name="title" id="title" class="form-control" value="" required="required">
+								<label>회원명</label><input type="text" name="uname" id="uname" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
-								<label>내용</label><textarea name="content" id="content" class="form-control" style="resize:none;" required="required"></textarea>
+								<label>학교명</label><input type="text" name="schoolname" id="schoolname" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
-								<label>첨부파일</label><input type="file" name="upfile" id="upfile" multiple="multiple" class="form-control" value="" >
+								<label>학년/반</label><input type="text" name="gradeclass" id="gradeclass" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
-								<label>작성자</label><input type="text" name="writer" id="writer" class="form-control" value="" required="required">
+								<label>아이디</label><input type="text" name="uid" id="uid" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
-								<button type="submit" class="btn btn-default">글쓰기</button>
+								<label>비밀번호</label><input type="text" name="upw" id="upw" class="form-control" value="" required="required">
+							</div>
+							<div class="form-group">
+								<label>노선</label><input type="text" name="route" id="route" class="form-control" value="" required="required">
+							</div>
+							<div class="form-group">
+								<label>탑승장소</label><input type="text" name="boardingplace" id="boardingplace" class="form-control" value="" required="required">
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-default">회원가입</button>
 								<button type="button" class="btn btn-default">취소</button>
 							</div>
 						</form>

@@ -34,8 +34,10 @@ public class MemberServiceImpl implements MemberService {
 	public void register(MemberVO member) {
 		log.info("register");
 		mapper.insert(member);
-		log.info(member);
-		authMapper.insert(member.getAuthList().get(0));
+		
+		if(member.getAuthList() != null) {
+			authMapper.insert(member.getAuthList().get(0));
+		}
 		
 	}
 
@@ -86,11 +88,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void insertAuthByuid(AuthorVO vo) {
-		authMapper.insert(vo);
+	public void insertAuthByUid(AuthorVO vo) {
+		authMapper.insert(vo);		
 	}
-	
-
 	
 	
 

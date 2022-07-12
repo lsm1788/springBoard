@@ -111,11 +111,12 @@ public class MemberController {
 		model.addAttribute("uid", uid);
 		return "/member/authList";
 	}
+
 	
 	@RequestMapping(value = "/getMemberAuths", method = RequestMethod.POST)
 	public String insertAuthByUid(AuthorVO vo) {
 		
-		service.insertAuthByuid(vo);
+		service.insertAuthByUid(vo);
 		
 		return "redirect:/member/getMemberAuths?uid="+vo.getUid();
 	}
